@@ -14,8 +14,8 @@ services:
       - ./web/conf.d/fastcgi_pass_params:/etc/nginx/conf.d/fastcgi_pass_params:ro
       - ./wp-themes:/var/www/html/wp-content/themes:ro
       - docroot:/var/www/html:ro
-      - certbot.conf:/etc/letsencrypt
-      - certbot.docroot:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+      - certbot_docroot:/var/www/certbot
     depends_on:
       - app
     logging:
@@ -54,11 +54,11 @@ services:
   certbot:
     image: certbot/certbot:v0.33.1
     volumes:
-      - certbot.conf:/etc/letsencrypt
-      - certbot.docroot:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+      - certbot_docroot:/var/www/certbot
 
 volumes:
   docroot:
   mysql_data:
-  certbot.conf:
-  certbot.docroot:
+  certbot_conf:
+  certbot_docroot:

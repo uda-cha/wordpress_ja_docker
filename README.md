@@ -30,7 +30,7 @@ $ git clone https://github.com/uda-cha/wordpress_ja_docker.git
 
 4. nginxの設定ファイルを編集する
 
-- `web/conf.d/default.conf.sample`を`web/conf.d/default.conf`にリネームして、WordPressの管理画面へのアクセスを許可するソースIPアドレスを追加する
+- `web/conf.d/geo.conf.sample`を`web/conf.d/geo.conf`にリネームして、WordPressの管理画面へのアクセスを許可するソースIPアドレスを追加する
 
 ```
 geo $from {

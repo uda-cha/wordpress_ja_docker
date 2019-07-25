@@ -93,6 +93,15 @@ $ docker-compose exec web ln -fs /etc/letsencrypt/live/www.yourdomain.com/privke
 $ docker-compose exec web nginx -s reload
 ```
 
+9. テーマディレクトリの所有者をphp-fpm実行ユーザに変更する(テーマをマウントポイントに指定している制約です。)
+
+```
+$ docker-compose exec app chown -R www-data:www-data /var/www/html/wp-content/themes
+```
+
+10. WordPressの管理画面にアクセスし、初期設定を行う
+11. このdocker-composeの制約として、初回インストール後にはテーマが一つも存在していない状態になります。管理画面にログインし、好きなテーマをインストール&有効化してください。
+
 ## 運用
 
 ### 証明書の更新

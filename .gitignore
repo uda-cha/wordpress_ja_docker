@@ -1,0 +1,4 @@
+wp-themes/*
+!.gitkeep
+web/conf.d/default.conf
+web/conf.d/geo.conf

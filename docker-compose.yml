@@ -1,0 +1,64 @@
+version: '3'
+services:
+  web:
+    build: ./web
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+        TZ: Asia/Tokyo
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./web/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./web/conf.d/geo.conf:/etc/nginx/conf.d/geo.conf:ro
+      - ./web/conf.d/fastcgi_pass_params:/etc/nginx/conf.d/fastcgi_pass_params:ro
+      - ./wp-themes:/var/www/html/wp-content/themes:ro
+      - docroot:/var/www/html:ro
+      - certbot.conf:/etc/letsencrypt
+      - certbot.docroot:/var/www/certbot
+    depends_on:
+      - app
+    logging:
+      driver: journald
+
+  app:
+    build: ./app
+    environment:
+        WORDPRESS_DB_HOST: db
+        WORDPRESS_DB_USER: wpuser
+        WORDPRESS_DB_PASSWORD: wpuserpasswd
+        WORDPRESS_DB_NAME: wpdb
+    volumes:
+      - ./wp-themes:/var/www/html/wp-content/themes
+      - docroot:/var/www/html
+    depends_on:
+      - db
+    logging:
+      driver: journald
+
+  db:
+    build: ./db
+    environment:
+        MYSQL_USER: wpuser
+        MYSQL_PASSWORD: wpuserpasswd
+        MYSQL_ROOT_PASSWORD: rootpasswd
+        MYSQL_DATABASE: wpdb
+        TZ: Asia/Tokyo
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    logging:
+      driver: journald
+
+  certbot:
+    image: certbot/certbot:v0.33.1
+    volumes:
+      - certbot.conf:/etc/letsencrypt
+      - certbot.docroot:/var/www/certbot
+
+volumes:
+  docroot:
+  mysql_data:
+  certbot.conf:
+  certbot.docroot:

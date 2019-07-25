@@ -1,11 +1,12 @@
 server {
     listen 80;
     server_name _;
-    return 301 https://$host$request_uri;
 
     location /.well-known/acme-challenge/ {
         root /var/www/certbot;
     }
+
+    return 301 https://$host$request_uri;
 }
 
 server {
@@ -31,6 +32,10 @@ server {
     add_header X-Frame-Options SAMEORIGIN;
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Content-Type-Options nosniff;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
 
     location ~ .*/\..* {
         deny all;

@@ -129,3 +129,25 @@ $ sudo tar cvfz docroot_bak.tar.gz -C /var/lib/docker/volumes/wordpress_ja_docke
 ```
 $ docker-compose exec db bash -c 'mysqldump -u$MYSQL_USER -p$MYSQL_PASSWORD --all-databases --events --opt 2>/dev/null' > dump.sql
 ```
+
+### 各種リストア
+
+「使い方」と同じ手順を行って再構築したdockerコンテナにデータをリストアします。
+
+#### WordPressコンテンツ
+
+```
+$ docker cp docroot_bak.tar.gz `docker-compose ps -q app`:/root/docroot_bak.tar.gz
+$ docker-compose exec app tar xvfz /root/docroot_bak.tar.gz -C /var/www/html
+$ docker-compose exec app rm /root/docroot_bak.tar.gz
+```
+
+テーマをgit管理していない場合、管理画面からテーマを新しくインストールしてください。
+
+#### データベース
+
+```
+$ docker cp dump.sql `docker-compose ps -q db`:/root/dump.sql
+$ docker-compose exec db bash -c 'mysql -u$MYSQL_USER -p$MYSQL_PASSWORD < /root/dump.sql'
+$ docker-compose exec db rm /root/dump.sql
+```

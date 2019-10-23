@@ -1,0 +1,22 @@
+---
+- name: register cron env PATH_TO_DOCKER_COMPOSE
+  cron:
+    name: PATH_TO_DOCKER_COMPOSE
+    user: "{{ ansible_user }}"
+    env: yes
+    job: "{{ docker-compose_install_path }}/docker-compose"
+
+- name: register cron env APP_HOME
+  cron:
+    name: APP_HOME
+    user: "{{ ansible_user }}"
+    env: yes
+    job: "{{ app_home }}"
+
+- name: register cron job that renews certificate
+  cron:
+    name: "renew certificate"
+    user: "{{ ansible_user }}"
+    day:  "25"
+    hour: "4"
+    job: "cd ${APP_HOME} && ( ${PATH_TO_DOCKER_COMPOSE} run --rm certbot renew --force-renew ; ${PATH_TO_DOCKER_COMPOSE} exec web nginx -s reload )"

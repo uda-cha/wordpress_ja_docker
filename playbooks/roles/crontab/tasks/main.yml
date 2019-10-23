@@ -20,4 +20,4 @@
     day:    "25"
     hour:    "4"
     minute: "15"
-    job: "( cd ${APP_HOME} && ( ${PATH_TO_DOCKER_COMPOSE} run --rm certbot renew --force-renew ; ${PATH_TO_DOCKER_COMPOSE} exec web nginx -s reload ) ) >> /var/log/renew_cert.log 2>&1"
+    job: "( cd ${APP_HOME} && ( ${PATH_TO_DOCKER_COMPOSE} run --rm certbot renew --force-renew ; ${PATH_TO_DOCKER_COMPOSE} exec web nginx -s reload ) ) >> {{ app_home }}/log/renew_cert.log 2>&1"

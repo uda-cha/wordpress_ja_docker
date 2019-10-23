@@ -2,13 +2,13 @@
 - name: register OS name
   command: uname -s
   register: uname_s
-  check_mode: yes
+  check_mode: no
   changed_when: no
 
 - name: register machine type
   command: uname -m
   register: uname_m
-  check_mode: yes
+  check_mode: no
   changed_when: no
 
 - name: download docker-compose

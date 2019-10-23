@@ -1,0 +1,34 @@
+---
+- name: install prerequisite packages of docker(yum)
+  yum:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: latest
+    update_cache: yes
+  notify: restart docker
+
+- name: add docker repository(yum)
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/
+
+- name: install docker(yum)
+  yum:
+    name: docker-ce
+    state: "{{ docker_version }}"
+    update_cache: yes
+  notify: restart docker
+
+- name: enable docker
+  systemd:
+    name: docker
+    enabled: yes
+
+- name: add current user to docker group
+  user:
+    name: "{{ ansible_ssh_user }}"
+    append: yes
+    groups: docker
+    state: present

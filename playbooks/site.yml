@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  roles:
+    - role: install_docker
+    - role: install_docker_compose

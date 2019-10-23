@@ -4,7 +4,7 @@
     name: PATH_TO_DOCKER_COMPOSE
     user: "{{ ansible_user }}"
     env: yes
-    job: "{{ docker-compose_install_path }}/docker-compose"
+    job: "{{ docker_compose_install_path }}/docker-compose"
 
 - name: register cron env APP_HOME
   cron:

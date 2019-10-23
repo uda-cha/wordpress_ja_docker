@@ -1,3 +1,3 @@
 ---
-docker-compose_install_path: "/usr/local/bin"
+docker_compose_install_path: "/usr/local/bin"
 app_home: "/home/{{ ansible_user }}/wordpress_ja_docker"

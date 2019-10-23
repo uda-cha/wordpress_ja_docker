@@ -16,8 +16,7 @@
 
 - name: install docker(yum)
   yum:
-    name: docker-ce
-    state: "{{ docker_version }}"
+    name: docker-ce-{{ docker_version }}
     update_cache: yes
   notify: restart docker
 

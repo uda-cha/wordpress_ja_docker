@@ -15,8 +15,4 @@
   get_url:
     url: "https://github.com/docker/compose/releases/download/{{ docker_conpose_version }}/docker-compose-{{ uname_s.stdout }}-{{ uname_m.stdout }}"
     dest: "{{ docker_compose_install_path }}/"
-
-- name: chmod 0755 on docker-compose
-  file:
-    path: "{{ docker_compose_install_path }}/docker-compose"
     mode: 0755

@@ -14,5 +14,5 @@
 - name: download docker-compose
   get_url:
     url: "https://github.com/docker/compose/releases/download/{{ docker_conpose_version }}/docker-compose-{{ uname_s.stdout }}-{{ uname_m.stdout }}"
-    dest: "{{ docker_compose_install_path }}/"
+    dest: "{{ docker_compose_install_path }}/docker-compose"
     mode: 0755
